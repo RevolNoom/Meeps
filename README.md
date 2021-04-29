@@ -63,9 +63,11 @@ Rewrite the denominator as (x+1)^2 - 2\*x and then integrate
 4. ANNOUNCE:
 Print to the console (or screen) in the format:
 
->The integration using <i>technique</i> yields <i>result</i>
->It's in error by ??? ulps
->With the relative error of ??? eps
+	> The integration using <i>technique</i> yields <i>result</i>
+
+	> It's in error by ??? ulps
+
+	> With the relative error of ??? eps
 
 And it takes the following arguments:
 	* @param  $a0: technique. Pointer to the technique string name (Square, Naive, Newton-Leibniz)
