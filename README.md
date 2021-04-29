@@ -63,18 +63,22 @@ Rewrite the denominator as (x+1)^2 - 2\*x and then integrate
 4. ANNOUNCE:
 Print to the console (or screen) in the format:
 
->The integration using <i>technique</i> yields <i>result</i>
->It's in error by ??? ulps
->With the relative error of ??? eps
+	> The integration using <i>technique</i> yields <i>result</i>
+
+	> It's in error by ??? ulps
+
+	> With the relative error of ??? eps
 
 And it takes the following arguments:
+
 	* @param  $a0: technique. Pointer to the technique string name (Square, Naive, Newton-Leibniz)
 	* @param  $a1: result. The double-precision register holds result calculated by <i>technique</i>	
 	* @param  $a2: reference. The double-precision result register calculated by <i>reference</i> (Newton-Leibniz? Vinacal? Casio?)
 
-On how to calculate absolute error <i>ulps</i> and relative error <i>eps</i>, refers to <a href="https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#9921">this paper</a>
+On how to calculate absolute error <i>ulps</i> and relative error <i>eps</i>, refers to <a href="https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#9921">this paper</a>.
 
 5. SOMETHING\_ELSE
+
 <i>which will be discussed in the meeting</i>
 
 ### Tips 
