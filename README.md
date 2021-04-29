@@ -81,6 +81,8 @@ On how to calculate absolute error <i>ulps</i> and relative error <i>eps</i>, re
 
 <i>which will be discussed in the meeting</i>
 
+<b>This section describes the reservations of registers</b>
+<i>tobecontinued</i>
 ### Tips 
 1. On coding integrations and series 
 Calculate from the smallest terms first, because if you do from the biggest ones, the smaller terms' bits might get shifted into oblivion.
