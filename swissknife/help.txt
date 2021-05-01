@@ -1,0 +1,3 @@
+Use Bashmancy.bash to add swissknife to your $PATH
+
+Use meep.bash for *.asm files merging
