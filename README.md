@@ -43,10 +43,15 @@ For insights about floating point number, <a href="https://docs.oracle.com/cd/E1
 
 These conditions are given:
 * a, b, n: Integers
-* a: Left bound of integration (0 ≤ a is given)
-* b: Right bound of integration (a ≤ b is given)
+* a: Begin bound of integration (0 ≤ a)
+* b: End bound of integration (0 ≤ b)
 * n: Number of sample points (How many dx?) <b>(except for NEWTON_LEIBNIZ)</b> 
 
+Note that:
+* If <b>a ≤ b</b>, we integrate from <b>left to right</b> of x-axis
+* If <b>b ≤ a</b>, the direction is from <b>right to left</b>
+This detail is useful for accuracy loss comparison when taking into account smaller terms' bits shifting.
+ 
 1. <b><a href="https://math.stackexchange.com/questions/29649/why-is-arctanx-x-x3-3x5-5-x7-7-dots">NEWTON_LEIBNIZ</a></b>: 
 Calculate with Newton-Leibniz theorem.
 
@@ -67,7 +72,9 @@ Calculate with Newton-Leibniz theorem.
 	* @param  $a2: n
 	* @return $f28: Double-precision calculation result.
 
-3. <b>SQUARE</b>: Rewrite the denominator as (x+1)^2 - 2\*x and then integrate
+3. <b>SQUARE</b>: Rewrite the function as (4/x) / ((x+1)\*(1+1/x) - 2) and then integrate
+	
+	<i>(inspired by Smith's formula for complex numbers calculation)</i>
 
 	<i>Maintainer: Tran Lam</i>
 
@@ -76,7 +83,7 @@ Calculate with Newton-Leibniz theorem.
 	* @param  $a2: n
 	* @return $f26: Double-precision calculation result.
 
-4. <b><a href="https://en.wikipedia.org/wiki/Simpson%27s_rule">SIMPSON</a></b>:
+4. <b><a href="https://www.freecodecamp.org/news/simpsons-rule/">SIMPSON</a></b>:
 Calculate by summing approximations of each sub-range.
 
 	<i>Maintainer: ???</i>
@@ -107,6 +114,7 @@ Print to the console (or screen) in the format:
 
 ### Test Cases
 
+For each test cases, we'll do two separate tests:
 These're tests case for which each integration algorithm will be tested:
 
 <b> Easy peasy: </b>
@@ -177,7 +185,9 @@ These're tests case for which each integration algorithm will be tested:
 1. On coding integrations and series 
 Calculate from the smallest terms first, because if you do from the biggest ones, the smaller terms' bits might get shifted into oblivion.
 
-2. Eureka
+2. dx concentration
+As x -> +INF, the rate of changes between f(x) and f(x+dx) become so small. Thus, it's wiser if we stretch out dx when x is large, and compress dx when x->0
 
+3. Eureka
 	<i>We'll find out on the go</i> 
 
