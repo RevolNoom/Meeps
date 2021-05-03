@@ -1,0 +1,40 @@
+For the first 4 test cases (Before <b>Black belt</b>), we'll do three separate tests on each of NAIVE, SQUARE, and SIMPSON:
+* <b>Even division</b> (all dx are equals), integrates from <b>left to right</b>.
+* <b>Even division</b>, integrates from <b>right to left</b>.
+* <b>Sloppily Small</b> (the nearer x is to 0, the smaller each dx is), integrates from <b>right to left</b>.
+
+Easy peasy: 
+
+	1. a = 0, b = 2, n = 10 (Example test case)
+	VINACAL ES 570 PLUS: 4.428594871
+	integral-calculator: 4.428594871176362
+
+	2. a = 0, b = 4, n = 20 (Project requirement's maximum constraint)
+	VINACAL ES 570 PLUS: 5.303270655
+	integral-calculator: 5.30327065467213
+
+The bugs are coming out: 
+
+	3. a = 0, b = 0.01, n = 1000 
+	VINACAL ES 570 PLUS: 0.03999866675
+	integral-calculator: 0.03999866674666095
+
+	4. a = 0, b = 100, n = 10000 
+	VINACAL ES 570 PLUS: 6.24318664
+	integral-calculator: 6.243186640432926
+
+Black-belt level: (It may takes a while)
+
+	a = 0, b = 1e9
+	5. n = 1e5 
+	6. n = 1e7
+	7. n = 1e9 (Don't worry if you can't run it to the end)
+	VINACAL ES 570 PLUS: 6.283185303
+	integral-calculator: 6.283185303179586
+
+Covid-19: (I need a microscope!)
+	a = 0, b = 1e-7
+	7. n = 10
+	8. n = 1000
+	VINACAL ES 570 PLUS: 4x10^(-7)
+	integral-calculator: 3.999999999999987 x 10^(−7)

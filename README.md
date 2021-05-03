@@ -34,7 +34,7 @@ approximation methods (e.g. rectangle/trapezoid method, Simpson’s method, etc.
 	* Naively integrate the function as-is
 	* Rewrite the denominator as <b>(x+1)^2 - 2x</b>
 	* Approximately summing ranges using <b>Simpson's rule</b>.
-	* Using a third-party calculator (Vinacal, Casio, Internet!, ...) for <i>reference</i> (which means, absolute error <i>(ulps)</i> and relative error <i>(epsilon)</i> of all above approaches will be based on the result of this final one. <b>(How to convert the result of third-party applications into our double-precision registers? To check stuffs?)</b>
+	* Using a third-party calculator (Vinacal, Casio, Internet!, ...) for <i>reference</i> (which means, absolute error <i>(ulps)</i> and relative error <i>(epsilon)</i> of all above approaches will be based on the result of this final one). 
 	
 For insights about floating point number, <a href="https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#9921">this paper</a> describes in great details about cancellations, rounding, and much more. 
 
@@ -72,9 +72,7 @@ Calculate with Newton-Leibniz theorem.
 	* @param  $a2: n
 	* @return $f28: Double-precision calculation result.
 
-3. <b>SQUARE</b>: Rewrite the function as (4/x) / ((x+1)\*(1+1/x) - 2) and then integrate
-	
-	<i>(inspired by Smith's formula for complex numbers calculation)</i>
+3. <b>SQUARE</b>: Rewrite the denominator as (x+1)^2 - 2x and then integrate
 
 	<i>Maintainer: Tran Lam</i>
 
@@ -112,39 +110,18 @@ Print to the console (or screen) in the format:
 
 	On how to calculate absolute error <i>ulps</i> and relative error <i>eps</i>, refers to <a href="https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html#9921">this paper</a>.
 
-### Test Cases
+## Test Cases
 
-For each test cases, we'll do two separate tests:
-These're tests case for which each integration algorithm will be tested:
+There're 13 test cases in total, written in testcases.txt. Results are referred from <a href="https://www.integral-calculator.com/">integral-calculator</a> and <a href="https://www.fahasa.com/may-tinh-vinacal-570es-plus-ii-hong-trang.html">VINACAL 570ES PLUS II</a>.
 
-<b> Easy peasy: </b>
-1. a = 0, b = 2, n = 10 (Example test case)
-2. a = 0, b = 4, n = 20 (Project requirement's maximum constraint)
+For the first 4 test cases (Before <b>Black belt</b>), we'll do three separate tests on each of NAIVE, SQUARE, and SIMPSON:
+* <b>Even division</b> (all dx are equals), integrates from <b>left to right</b>.
+* <b>Even division</b>, integrates from <b>right to left</b>.
+* <b>Sloppily Small</b> (the nearer x is to 0, the smaller each dx is), integrates from <b>right to left</b>.
 
-<b> The bugs are coming out: </b>
+After that, the most precise method will be employed for the remaining tests.
 
-3. a = 0, b = 0.1, n = 10 
-4. a = 0, b = 0.1, n = 1000 (To compare the difference between results with 3. )
-5. a = 0, b = 100, n = 1000
-6. a = 0, b = 100, n = 10000 (To compare the difference between results with 5. )
-
-<b> Black-belt level:</b> <i>(They may take a while)</i>
-
-7. a = 0, b = 1e6, n = 1e7 
-8. a = 0, b = 1e9, n = 1e9 
-
-<b> <a href="https://www.youtube.com/watch?v=9vD2JBq0ns8">So big, So small</a>:</b> <i>(Because I'm not going to wait 30 minutes in an 1-hour test)</i>
-
-9. a = 0, b = 1e9, n = 1e6
-10. a = 0, b = 1e9, n = 1e5 
-
-<b><a href="https://ncov.moh.gov.vn/dong-thoi-gian">Covid-19</a>:</b> <i>(I need a microscope!)</i>
-
-11. a = 0, b = 1e-5, n = 10
-12. a = 0, b = 1e-5, n = 1000
-13. a = 0, b = 1e-7, n = 100
-
-<h3>Some helper functions:</h3>
+## Some helper functions:
 
 6. <b>QUICK_SAVE</b>: Quickly saves all [Saved Registers](#SR) onto the Stack. 
 
@@ -154,7 +131,7 @@ These're tests case for which each integration algorithm will be tested:
 	* @param: none
 	* @return: none
 
-7. <b>QUICK_LOAD</b>: Quickly load all [Saved Registers](#SR) that was saved by QUICK_SAVE back to their right places
+7. <b>QUICK_LOAD</b>: Quickly load all [Saved Registers](#SR) that was saved by QUICK\_SAVE back to their right places
 
 	<i>Maintainer: Tran Lam</i>
 
@@ -185,7 +162,7 @@ These're tests case for which each integration algorithm will be tested:
 1. On coding integrations and series 
 Calculate from the smallest terms first, because if you do from the biggest ones, the smaller terms' bits might get shifted into oblivion.
 
-2. dx concentration
+2. Sloppily small
 As x -> +INF, the rate of changes between f(x) and f(x+dx) become so small. Thus, it's wiser if we stretch out dx when x is large, and compress dx when x->0
 
 3. Eureka
