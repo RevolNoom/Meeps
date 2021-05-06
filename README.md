@@ -42,7 +42,8 @@ For insights about floating point number, <a href="https://docs.oracle.com/cd/E1
 <h3 id="Components"> MIPS Program Components (functions)</h3>
 
 These conditions are given:
-* a, b, n: Integers
+* a, b: single-precision float numbers
+* n: Integer
 * a: Begin bound of integration (0 ≤ a)
 * b: End bound of integration (0 ≤ b)
 * n: Number of sample points (How many dx?) <b>(except for NEWTON_LEIBNIZ)</b> 
@@ -127,7 +128,8 @@ After that, the most precise method will be employed for the remaining tests.
 
 	<i>Maintainer: Tran Lam</i>
 
-	<i>(Notes: This subroutine should be placed right on top of the subroutine whom called it. A miss-timed pair of QUICK_SAVE and QUICK_LOAD will jumble up your Stack horribly)</i> 
+	<i>(Notes: Aim carefully. A miss-timed pair of QUICK_SAVE and QUICK_LOAD will jumble up your Stack horribly)</i> 
+
 	* @param: none
 	* @return: none
 
@@ -135,7 +137,8 @@ After that, the most precise method will be employed for the remaining tests.
 
 	<i>Maintainer: Tran Lam</i>
 
-	<i>(Notes: Be sure to cleanly wipe off the Stack partition you use before you call it. )</i> 
+	<i>(Notes: Aim carefully. A miss-timed pair of QUICK_SAVE and QUICK_LOAD will jumble up your Stack horribly)</i> 
+
 	* @param: none
 	* @return: none
 
