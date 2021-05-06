@@ -123,7 +123,7 @@ After that, the most precise method will be employed for the remaining tests.
 
 ## Some helper functions:
 
-6. <b>QUICK_SAVE</b>: Quickly saves all [Saved Registers](#SR) onto the Stack. 
+6. <b>QUICK_SAVE</b>: Quickly saves all [Saved Registers](#SR), Argument Registers ($a?) and Return Register ($v0, $v1)  onto the Stack. 
 
 	<i>Maintainer: Tran Lam</i>
 
