@@ -36,7 +36,7 @@ else
 		COUNT=$((COUNT+1))
 	done
 	
-	printf "${FinalWords[$RANDOM % $((COUNT))]}"
+	printf "${FinalWords[$(($RANDOM % $COUNT))]}"
 	PATH=$PATH:$TOOLBOX_DIR
 	unset TOOLBOX_DIR
 	echo ""
