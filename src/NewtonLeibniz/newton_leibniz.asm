@@ -86,12 +86,14 @@
 
 
 li	$a0 0
-li	$a1 1
-li	$a2 50
+li	$a1 1000000000
+li	$a2 100000
 .data
+half.d:	.double 0.5
 one.d:	.double	1.0
 two.d:	.double 2.0
 four.d: .double 4.0
+pi.d: 	.double 3.141592653589793238
 
 # ============== NEWTON_LEIBNIZ ===========
 # Calculate 4*(arctan(b) - arctan(a))
@@ -132,7 +134,6 @@ four.d: .double 4.0
 	
 	lw	$ra 0($sp)	# End the procedure
 	add	$sp $sp 4
-	#jr	$ra		# Uncomment when we merge this file with other .asm files
 	
 	li	$v0 10		# Exit. Comment these two lines 
 	syscall			# when merging with other files
@@ -200,13 +201,21 @@ ARCTAN:
 	# ($sp = array end. But not now. After CALCULATE_EACH_TERM is done)
 	
 		VARIABLES_SET_UP:
+		# l.d	$f0, half.d
 		mtc1	$a0 $f0
 		cvt.d.w	$f0 $f0	# Convert x to double	
 		
 		l.d	$f2 one.d	# Set initial denominator to 1.0
 		
-		mul.d	$f4 $f0 $f0	# Numerator Step = x^2
+		# =====
+		c.le.d	$f0 $f2		# if $f0 < 1, then use the numerator step calculated
+		bc1t	cont
+		# =====
+		div.d	$f0 $f2 $f0		
 		
+		cont:		
+		mul.d	$f4 $f0 $f0	# Numerator Step = x^2 for |x| < 1
+
 		l.d	$f6 two.d	# Denominator Step = 2.0
 		
 		# First, set sign bit to 1.0
@@ -248,18 +257,18 @@ ARCTAN:
 	# $sp = array end 
 	
 		X_IS_ONE:
-			bgt	$a0 1 X_GREATER_ONE
+		# 	bgt	$a0 1 X_GREATER_ONE
 			# Calculation direction: Right -> Left
 			add	$t2 $sp $zero	# Iterator begins from the end of array
 			addi	$t3 $zero 8	# Iterator step
 			addi	$t4 $t1	0	# End Iterator is array before-beginning.
 			j	SUMMING
 			
-		X_GREATER_ONE:
+		# X_GREATER_ONE:
 			# Calculation direction: Left -> Right
-			add	$t2 $sp $zero	# Iterator starts from array beginning
-			addi	$t3 $zero -8	# Iterator step
-			add	$t4 $sp	-8	# End Iterator is array past-the-end.
+		# add	$t2 $sp $zero	# Iterator starts from array beginning
+		# addi	$t3 $zero -8	# Iterator step
+		# add	$t4 $sp	-8	# End Iterator is array past-the-end.
 			
 		SUMMING:
 			lwc1	$f0 0($t2)	# Load the double from stack
@@ -271,6 +280,15 @@ ARCTAN:
 			add	$t2 $t2 $t3	# iterator += step
 			
 			bne	$t2 $t4 SUMMING	# loop if iterator != end
+			
+			# check if the input is greater than 1
+			# if yes, then we need to take pi/2 minus the above arctan result
+			blt 	$a0 1 RETURN_THE_REGISTERS_AS_PROMISED
+			l.d	$f0 pi.d
+			l.d	$f2 two.d
+			div.d	$f0 $f0 $f2
+			sub.d	$f20 $f0 $f20
+			
 	
 	RETURN_THE_REGISTERS_AS_PROMISED:
 		add	$sp $t1 $zero	# Deallocate the array of terms
